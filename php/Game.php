@@ -1,41 +1,7 @@
 <?php
 
+require_once __DIR__ . '/Player.php';
 require_once __DIR__ . '/OutputInterface.php';
-
-class Player {
-
-    private $name;
-    private $currentField;
-    private $points;
-
-    public function __construct($name) {
-        $this->name = $name;
-        $this->points = 0;
-        $this->currentField = 0;
-    }
-
-    public function getPoints() {
-        return $this->points;
-    }
-
-    public function getCurrentField() {
-        return $this->currentField;
-    }
-
-    public function addPoints($points) {
-        $this->points +=$points;
-        return $this;
-    }
-
-    public function setCurrentField($currentField) {
-        $this->currentField = $currentField;
-    }
-
-    public function __toString() {
-        return $this->name;
-    }
-
-}
 
 class Game {
     const WINNING_POINTS = 6;
@@ -80,10 +46,11 @@ class Game {
     }
 
     public function addPlayer($playerName) {
-        array_push($this->players, new Player($playerName));
+        $newPlayer = new Player($playerName);
+        array_push($this->players, $newPlayer);
         $this->inPenaltyBox[$this->howManyPlayers()] = false;
 
-        $this->echoln($playerName . " was added");
+        $this->output->playerAdded($newPlayer);
         $this->echoln("They are player number " . count($this->players));
         return true;
     }
@@ -126,7 +93,7 @@ class Game {
     }
 
     private function getCurrentCategory() {
-        return $this->categories[$this->getCurrentPlayer()->getCurrentField() % 4];
+        return $this->categories[$this->getCurrentPlayer()->getCurrentField() % count($this->categories)];
     }
 
     private function getCurrentPlayer() {
@@ -179,21 +146,16 @@ class Game {
     }
 
     private function movePlayer(Player $player, $roll) {
-        $newField = ($player->getCurrentField() + $roll) % count($this->board);
-        $player->setCurrentField($newField);
+        $newField = ($player->getLocation() + $roll) % count($this->board);
+        $player->setLocation($newField);
     }
 
     private function reportPlayerPoints(Player $player) {
-        $this->echoln($player .
-                " now has " .
-                $player->getPoints() .
-                " Gold Coins.");
+        $this->output->reportPlayerPoints($player);
     }
 
     private function reportPlayerLocation(Player $player) {
-        $this->echoln($player
-                . "'s new location is "
-                . $player->getCurrentField());
+        $this->output->reportPlayerLocation($player);
     }
 
 }
