@@ -1,14 +1,21 @@
 <?php
 
 include_once __DIR__ . '/Game.php';
+require_once __DIR__ . '/ConsoleOutput.php';
 
 $isWinner = false;
 
-$aGame = new Game();
+$board = array(
+    'Pop', 'Science', 'Sports', 'Rock',
+    'Pop', 'Science', 'Sports', 'Rock',
+    'Pop', 'Science', 'Sports', 'Rock'
+);
 
-$aGame->add("Chet");
-$aGame->add("Pat");
-$aGame->add("Sue");
+$aGame = new Game($board, new ConsoleOutput());
+
+$aGame->addPlayer("Chet");
+$aGame->addPlayer("Pat");
+$aGame->addPlayer("Sue");
 
 
 do {

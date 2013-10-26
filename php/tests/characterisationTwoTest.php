@@ -1,5 +1,5 @@
 <?php
-
+/*
 include_once __DIR__ . '/../Game.php';
 
 // <editor-fold desc="Random pool generation" defaultstate="collapsed">
@@ -52,7 +52,7 @@ class CharacterisationTwoTest extends PHPUnit_Framework_TestCase {
     public function testCharacterisation() {
         $this->markTestSkipped();
         return;
-        
+
         $rollIndex = 0;
         $answerIndex = 0;
 
@@ -90,4 +90,4 @@ class CharacterisationTwoTest extends PHPUnit_Framework_TestCase {
         }
     }
 
-}
+}*/
