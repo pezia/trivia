@@ -10,6 +10,7 @@ class FakeOutput implements OutputInterface {
     private $playerLocations = array();
     private $playerPoints = array();
     private $playerNames = array();
+    private $playersInPenalty = array();
 
     public function write($text) {
         $this->buffer .= $text;
@@ -47,6 +48,16 @@ class FakeOutput implements OutputInterface {
         return in_array($playerName, $this->playerNames);
     }
 
+    public function reportPlayerInPenalty(WritableInterface $player) {
+        $this->playersInPenalty[] = $player->getName();
+        $this->playersInPenalty = array_unique($this->playersInPenalty);
+    }
+
+    public function hasPlayerInPenalty($playerName) {
+        return in_array($playerName, $this->playersInPenalty);
+    }
+
+
 }
 
 class GameTest extends PHPUnit_Framework_TestCase {
@@ -78,6 +89,23 @@ class GameTest extends PHPUnit_Framework_TestCase {
         $game->roll(2);
 
         $this->assertEquals(2, $fakeOutput->getLocationForPlayerName('Player2'));
+    }
+
+    public function testWrongAnswerMovesPlayerToPenaltyBox() {
+        $fakeOutput = new FakeOutput();
+        $game = new Game(array('Pop', 'Pop', 'Pop', 'Pop'), $fakeOutput);
+
+        $game->addPlayer('Player1');
+        $game->addPlayer('Player2');
+        $game->roll(1);
+        $game->wrongAnswer();
+
+        $this->assertTrue($fakeOutput->hasPlayerInPenalty('Player1'));
+        $this->assertFalse($fakeOutput->hasPlayerInPenalty('Player2'));
+    }
+    
+    public function testGoodAnswerCantGetOutOfPenalty() {
+
     }
 
 }

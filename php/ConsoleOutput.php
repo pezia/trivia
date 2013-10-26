@@ -26,4 +26,8 @@ class ConsoleOutput implements OutputInterface {
         echo $player->getName() . " was added\n";
     }
 
+    public function reportPlayerInPenalty(WritableInterface $player) {
+        echo $player->getName() . " was sent to the penalty box\n";
+    }
+
 }

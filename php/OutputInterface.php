@@ -12,4 +12,6 @@ interface OutputInterface {
     function reportPlayerLocation(WritableInterface $player);
 
     function playerAdded(WritableInterface $player);
+
+    function reportPlayerInPenalty(WritableInterface $player);
 }

@@ -130,7 +130,7 @@ class Game {
 
     public function wrongAnswer() {
         $this->echoln("Question was incorrectly answered");
-        $this->echoln($this->getCurrentPlayer() . " was sent to the penalty box");
+        $this->output->reportPlayerInPenalty($this->getCurrentPlayer());
         $this->inPenaltyBox[$this->currentPlayerIndex] = true;
 
         $this->nextPlayer();
