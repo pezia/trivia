@@ -40,16 +40,19 @@ createRandomPools(10000, 100000);
 
 //</editor-fold>
 
-class CharacterisationTest2 extends PHPUnit_Framework_TestCase {
+class CharacterisationTwoTest extends PHPUnit_Framework_TestCase {
 
-    private $randomPools;
+    private static $randomPools;
 
     public static function setUpBeforeClass() {
         createRandomPools(10000, 100000);
-        $this->randomPools = readRandomPools();
+        self::$randomPools = readRandomPools();
     }
 
-    public function testCharacterisationTest2() {
+    public function testCharacterisation() {
+        $this->markTestSkipped();
+        return;
+        
         $rollIndex = 0;
         $answerIndex = 0;
 
@@ -65,8 +68,8 @@ class CharacterisationTest2 extends PHPUnit_Framework_TestCase {
             $aGame->add("Sue");
 
             do {
-                $roll = $this->randomPools['rolls'][(++$rollIndex % count($this->randomPools['rolls']))];
-                $answer = $this->randomPools['answers'][(++$answerIndex % count($this->randomPools['answers']))];
+                $roll = self::$randomPools['rolls'][(++$rollIndex % count(self::$randomPools['rolls']))];
+                $answer = self::$randomPools['answers'][(++$answerIndex % count(self::$randomPools['answers']))];
 
                 $aGame->roll($roll);
 
@@ -82,7 +85,7 @@ class CharacterisationTest2 extends PHPUnit_Framework_TestCase {
             if (!file_exists($filename)) {
                 file_put_contents($filename, $output);
             } else {
-                $this->assertEquals(file_get_contents($filename), $output);
+                $this->assertEquals(file_get_contents($filename), $output, 'Output does not match for ' . $i);
             }
         }
     }

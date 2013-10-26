@@ -3,7 +3,6 @@
 class CharacterisationTest extends PHPUnit_Framework_TestCase {
 
     public function testCharacterisationTest() {
-
         for ($i = 0; $i < 1000; $i++) {
             srand($i);
             mt_srand($i);
@@ -19,10 +18,9 @@ class CharacterisationTest extends PHPUnit_Framework_TestCase {
             if (!file_exists($filename)) {
                 file_put_contents($filename, $output);
             } else {
-                $this->assertEquals(file_get_contents($filename),$output);
+                $this->assertEquals(file_get_contents($filename), $output, 'Output does not match for ' . $i);
             }
         }
-
     }
 
 }
